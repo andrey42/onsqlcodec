@@ -7,27 +7,28 @@ It's main purpose and advantage is to transparently relay all index-stored docum
 with it's own replication and fault-tolerance strategy. This approach greatly reduces index size and speeds up 
 all the index manipulations and merging, allowing use of Solr both as a NoSQL database and search engine at the same time.
 
-The codec  relays stored fields to the NOSQL store while keeping all other index components in usual file-based storage layout
-codec has been made with SolrCloud and NoSQL own fault tolarance usage in mind, hence it's tried to ignore wrote commands 
-to NoSQL storage if index is being created at replica node which is not a Solr shard leader currently.
-To build this codec, you will need to download Oracle NOSQL database open edition and copy two files into ./lib folder:
-je.jar
-kvstore.jar
+The codec  relays stored fields to the NOSQL store while keeping all other index components in usual file-based storage layout. The codec has been made with SolrCloud and NoSQL own fault tolarance usage in mind, hence it's tried to ignore wrote commands to NoSQL storage if index is being created at replica node which is not a Solr shard leader currently.<br/>
 
-Besides of these files, standard Lucene and Solr libraries are required:
-lucene-analyzers-common-4.10.1.jar
-lucene-codecs-4.10.1.jar
-lucene-core-4.10.1.jar
-lucene-queries-4.10.1.jar
-lucene-queryparser-4.10.1.jar
-slf4j-api-1.7.6.jar
-solr-core-4.10.1.jar
-solr-solrj-4.10.1.jar
-zookeeper-3.4.5.jar
+To build this codec, you will need to download Oracle NOSQL database open edition from Oracle site
+www.oracle.com/technetwork/database/nosqldb/
+then copy two jars from it's distribution package into ./lib folder:<br/>
+je.jar<br/>
+kvstore.jar<br/>
+
+Besides of these files, standard Lucene and Solr libraries are required:<br/>
+lucene-analyzers-common-4.10.1.jar<br/>
+lucene-codecs-4.10.1.jar<br/>
+lucene-core-4.10.1.jar<br/>
+lucene-queries-4.10.1.jar<br/>
+lucene-queryparser-4.10.1.jar<br/>
+slf4j-api-1.7.6.jar<br/>
+solr-core-4.10.1.jar<br/>
+solr-solrj-4.10.1.jar<br/>
+zookeeper-3.4.5.jar<br/>
 
 Copy them into the ./lib folder from Solr distribution, then run ant with supplied build.xml file
 
-You will get onsqlcodec.jar in ./dist folder after succesfull compilation
+You will get onsqlcodec.jar in ./dist folder after succesfull compilation.<br/>
 Details on customizing your Solr installation to use this codec are given below:
 1. Create Solr cores of your choice.
 2. Edit solrconfig.xml file
