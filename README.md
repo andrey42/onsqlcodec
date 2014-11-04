@@ -7,9 +7,8 @@ It's main purpose and advantage is to transparently relay all index-stored docum
 with it's own replication and fault-tolerance strategy. This approach greatly reduces index size and speeds up 
 all the index manipulations and merging, allowing use of Solr both as a NoSQL database and search engine at the same time.
 
-The codec  relays stored fields to the NOSQL store while keeping all other index components in usual file-based storage layout
-codec has been made with SolrCloud and NoSQL own fault tolarance usage in mind, hence it's tried to ignore wrote commands 
-to NoSQL storage if index is being created at replica node which is not a Solr shard leader currently.
+The codec  relays stored fields to the NOSQL store while keeping all other index components in usual file-based storage layout. The codec has been made with SolrCloud and NoSQL own fault tolarance usage in mind, hence it's tried to ignore wrote commands to NoSQL storage if index is being created at replica node which is not a Solr shard leader currently.<br/>
+
 To build this codec, you will need to download Oracle NOSQL database open edition from Oracle site
 www.oracle.com/technetwork/database/nosqldb/
 then copy two jars from it's distribution package into ./lib folder:<br/>
