@@ -8,7 +8,8 @@ with it's own replication and fault-tolerance strategy. This approach greatly re
 all the index manipulations and merging, allowing use of Solr both as a NoSQL database and search engine at the same time.
 
 The codec  relays stored fields to the NOSQL store while keeping all other index components in usual file-based storage layout. The codec has been made with SolrCloud and NoSQL own fault tolarance usage in mind, hence it's tried to ignore wrote commands to NoSQL storage if index is being created at replica node which is not a Solr shard leader currently.<br/>
-
+Pre-built version of the codec is avalable in ./dist folder.<br/>
+Also, you may build the codec on your own.
 To build this codec, you will need to download Oracle NOSQL database open edition from Oracle site
 www.oracle.com/technetwork/database/nosqldb/
 then copy two jars from it's distribution package into ./lib folder:<br/>
@@ -26,7 +27,8 @@ solr-core-4.10.1.jar<br/>
 solr-solrj-4.10.1.jar<br/>
 zookeeper-3.4.5.jar<br/>
 
-Copy them into the ./lib folder from Solr distribution, then run ant with supplied build.xml file
+Copy them into the ./lib folder from Solr distribution, then run ant with supplied build.xml file.
+
 
 You will get onsqlcodec.jar in ./dist folder after succesfull compilation.<br/>
 Details on customizing your Solr installation to use this codec are given below:
