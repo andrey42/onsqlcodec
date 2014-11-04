@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="search_engine" default="create-jar" basedir=".">  
+  <presetdef name="javac">
+    <javac includeantruntime="false" />
+  </presetdef>
+  <property file="build.properties"/>
+  <path id="library.onsql">
+    <pathelement location="${local.lib.dir}/je.jar"/>
+    <pathelement location="${local.lib.dir}/kvstore.jar"/>
+    <pathelement location="${local.lib.dir}/lucene-analyzers-common-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/lucene-codecs-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/lucene-core-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/lucene-queries-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/lucene-queryparser-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/slf4j-api-1.7.6.jar"/>
+    <pathelement location="${local.lib.dir}/solr-core-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/solr-solrj-4.10.1.jar"/>
+    <pathelement location="${local.lib.dir}/zookeeper-3.4.5.jar"/>                    
+  </path>
+  <target name="init">
+    <buildnumber file="build.num"/>
+     <tstamp>
+     <format property="build.date" pattern="yyyy-MM-dd hh:mm:ss" />
+     </tstamp>
+    <mkdir dir="${output.dir}"/>
+    <mkdir dir="${dist.dir}"/>
+  </target>
+
+  <target name="clean" description="Clean the classes, delete war file and upacked version in jetty folder">
+    <delete includeemptydirs="true" quiet="false">
+      <fileset dir="${output.dir}" includes="**/*"/>
+    </delete>
+    <delete includeemptydirs="true" quiet="false">
+      <fileset dir="${dist.dir}" includes="**/onsqlcodec.jar"/>
+    </delete>
+  </target>
+
+  <target name="compile" description="Compile Java source files" depends="init, clean">
+    <javac destdir="${output.dir}" classpathref="library.onsql" debug="${javac.debug}" nowarn="${javac.nowarn}" deprecation="${javac.deprecation}"
+           encoding="UTF-8" source="1.6" target="1.6">
+      <src path="src"/>
+    </javac>
+  </target>
+
+  <target name="create-jar" description="Create codec jar archive" depends="compile">
+  <jar destfile="${dist.dir}/onsqlcodec.jar">
+      <fileset dir="${output.dir}">
+       <include name="**/*.class"/>
+       <include name="**/*.properties"/>
+       <include name="**/*.xml"/>
+       <include name="**/*.ini"/>
+       <exclude name="**/dell/apps/lucene/codecs/test/*.*"/>     
+      </fileset>
+    <fileset dir="./src">
+      <include name="**/META-INF/services/org.apache.lucene.codecs.Codec"/>
+    </fileset>
+     <manifest>
+        <attribute name="Built-By" value="${user.name}"/>   
+        <attribute name="Implementation-Vendor" value="Dell"/>
+        <attribute name="Implementation-Title" value="${manifect.project.title}"/>
+        <attribute name="Specification-Version" value="${version.num}"/>
+        <attribute name="Implementation-Version" value="${version.num}-b${build.number}"/>
+        <attribute name="Built-Date" value="${build.date}"/>  
+    </manifest>  
+  </jar>
+  </target>
+ <target name="replace-headers">
+    <loadfile property="javaheader" srcFile="./standardheader.txt"/>
+    <replaceregexp match="(/\*.*\*/.*)??^package " flags="sm"
+        replace="${javaheader}${line.separator}package ">
+        <fileset dir="src">
+            <include name="**/*.java"/>
+            <exclude name="**/dell/apps/lucene/codecs/test/*.*"/>
+        </fileset>
+    </replaceregexp>
+</target>
+</project>
