@@ -28,7 +28,7 @@ zookeeper-3.4.5.jar<br/>
 
 Copy them into the ./lib folder from Solr distribution, then run ant with supplied build.xml file
 
-You will get onsqlcodec.jar in ./dist folder after succesfull compilation
+You will get onsqlcodec.jar in ./dist folder after succesfull compilation.<br/>
 Details on customizing your Solr installation to use this codec are given below:
 1. Create Solr cores of your choice.
 2. Edit solrconfig.xml file
